@@ -12,6 +12,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -70,7 +71,7 @@ public class ProductService {
 
     }
 
-    @Transactional
+    @Transactional (propagation = Propagation.SUPPORTS )
     public void delete(Long id) {
         try {
             respository.deleteById(id);
@@ -78,7 +79,7 @@ public class ProductService {
             throw new ResourNotFoundException("Recurso não encontrado");
         }
         catch (DataIntegrityViolationException e){
-            throw new DataBaseException("Data de integridade referencial")
+            throw new DataBaseException("Data de integridade referencial");
         }
     }
 
