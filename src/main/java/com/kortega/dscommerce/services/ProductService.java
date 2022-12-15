@@ -50,7 +50,6 @@ public class ProductService {
         prod.setDescription(dto.getDescription());
         prod.setPrice(dto.getPrice());
         prod.setImgUrl(dto.getImgUrl());
-
         /*
         prod = respository.save(prod);
         return new ProductDTO(prod);
@@ -82,6 +81,7 @@ public class ProductService {
             throw new DataBaseException("Data de integridade referencial");
         }
     }
+
 
     private void copyDtoToProd(ProductDTO dto, Product prod) {
         prod.setName(dto.getName());

@@ -1,11 +1,17 @@
 package com.kortega.dscommerce.dto;
 
 import com.kortega.dscommerce.entities.Product;
+import jakarta.validation.constraints.*;
 
 public class ProductDTO {
     private Long id;
+    @Size (min =  3,max = 80,message = "Nome precisa ter dee 3 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String name;
+    @Size (min =  10, message = "descripção precisa ter no minimo 10 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String description;
+    @Positive (message = "o preço deve ser positivo")
     private Double price;
     private String imgUrl;
 
