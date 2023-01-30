@@ -2,7 +2,7 @@ package com.kortega.dscommerce.controllers;
 
 import com.kortega.dscommerce.dto.ProductDTO;
 import com.kortega.dscommerce.services.ProductService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

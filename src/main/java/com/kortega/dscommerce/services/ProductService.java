@@ -5,7 +5,7 @@ import com.kortega.dscommerce.entities.Product;
 import com.kortega.dscommerce.repositories.ProductRespository;
 import com.kortega.dscommerce.services.exceptions.DataBaseException;
 import com.kortega.dscommerce.services.exceptions.ResourNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;

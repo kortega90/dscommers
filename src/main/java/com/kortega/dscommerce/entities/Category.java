@@ -1,7 +1,10 @@
 package com.kortega.dscommerce.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;
 
