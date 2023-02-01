@@ -3,8 +3,8 @@ package com.kortega.dscommerce.controllers.handler;
 import com.kortega.dscommerce.dto.CustomError;
 import com.kortega.dscommerce.dto.ValidatioError;
 import com.kortega.dscommerce.services.exceptions.DataBaseException;
+import com.kortega.dscommerce.services.exceptions.ForbidenException;
 import com.kortega.dscommerce.services.exceptions.ResourNotFoundException;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
 @ControllerAdvice
@@ -35,6 +36,12 @@ public class ControllerExceptionHandler {
         for (FieldError f: e.getBindingResult().getFieldErrors()){
             err.addError(f.getField(), f.getDefaultMessage());
         }
+        return ResponseEntity.status(status).body(err);
+    }
+    @ExceptionHandler(ForbidenException.class)
+    public ResponseEntity<CustomError> forbiden(ForbidenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }

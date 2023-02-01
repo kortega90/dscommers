@@ -91,6 +91,15 @@ public class User implements UserDetails {
         return password;
     }
 
+    public boolean hasRole(String roleName){
+        for (Role role: roles){
+            if (role.getAuthority().equals(roleName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String getUsername() {
         return email;

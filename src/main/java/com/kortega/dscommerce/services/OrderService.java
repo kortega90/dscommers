@@ -2,10 +2,8 @@ package com.kortega.dscommerce.services;
 
 import com.kortega.dscommerce.dto.OrderDTO;
 import com.kortega.dscommerce.dto.OrderItemDTO;
-import com.kortega.dscommerce.entities.Order;
-import com.kortega.dscommerce.entities.OrderStatus;
-import com.kortega.dscommerce.entities.Product;
-import com.kortega.dscommerce.entities.User;
+import com.kortega.dscommerce.entities.*;
+import com.kortega.dscommerce.repositories.OrderItemRepository;
 import com.kortega.dscommerce.repositories.OrderRepository;
 import com.kortega.dscommerce.repositories.ProductRespository;
 import com.kortega.dscommerce.services.exceptions.ResourNotFoundException;
@@ -19,18 +17,23 @@ import java.time.Instant;
 public class OrderService {
 
     @Autowired
-    private OrderRepository respository;
+    private OrderRepository repository;
     @Autowired
     private ProductRespository productRespository;
     @Autowired
+    private OrderItemRepository orderItemRepository;
+    @Autowired
     private UserService userService;
+    @Autowired
+    private AuthService authService;
 
     @Transactional(readOnly = true)
     public OrderDTO findById(Long id) {
-       Order order = respository.findById(id).orElseThrow(() -> new ResourNotFoundException("Recurso nao encontrado"));
+        Order order = repository.findById(id).orElseThrow(() -> new ResourNotFoundException("Recurso nao encontrado"));
+        authService.validateSelfOrAdmin(order.getClient().getId());
         return new OrderDTO(order);
-
     }
+    
     @Transactional
     public OrderDTO insert(OrderDTO dto) {
         Order order = new Order();
@@ -40,7 +43,12 @@ public class OrderService {
         order.setClient(user);
         for (OrderItemDTO itemDTO: dto.getItems()){
             Product product = productRespository.getReferenceById(itemDTO.getProductId());
+            OrderItem item = new OrderItem(order,product, itemDTO.getQuantity(), product.getPrice());
+            order.getItems().add(item);
         }
+        repository.save(order);
+        orderItemRepository.saveAll(order.getItems());
+        return new OrderDTO(order);
 
     }
 }
