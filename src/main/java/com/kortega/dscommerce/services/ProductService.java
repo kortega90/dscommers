@@ -1,7 +1,9 @@
 package com.kortega.dscommerce.services;
 
+import com.kortega.dscommerce.dto.CategoryDTO;
 import com.kortega.dscommerce.dto.ProductDTO;
 import com.kortega.dscommerce.dto.ProductMinDTO;
+import com.kortega.dscommerce.entities.Category;
 import com.kortega.dscommerce.entities.Product;
 import com.kortega.dscommerce.repositories.ProductRespository;
 import com.kortega.dscommerce.services.exceptions.DataBaseException;
@@ -49,6 +51,13 @@ public class ProductService {
         prod.setDescription(dto.getDescription());
         prod.setPrice(dto.getPrice());
         prod.setImgUrl(dto.getImgUrl());
+        
+        prod.getCategories().clear();
+        for (CategoryDTO obj: dto.getCategories()){
+            Category cat = new Category();
+            cat.setId(obj.getId());
+            prod.getCategories().add(cat);
+        }
         /*
         prod = respository.save(prod);
         return new ProductDTO(prod);
@@ -87,6 +96,13 @@ public class ProductService {
         prod.setDescription(dto.getDescription());
         prod.setPrice(dto.getPrice());
         prod.setImgUrl(dto.getImgUrl());
+
+        prod.getCategories().clear();
+        for (CategoryDTO obj: dto.getCategories()){
+            Category cat = new Category();
+            cat.setId(obj.getId());
+            prod.getCategories().add(cat);
+        }
     }
 
 }
