@@ -4,6 +4,7 @@ import com.kortega.dscommerce.entities.Order;
 import com.kortega.dscommerce.entities.OrderItem;
 import com.kortega.dscommerce.entities.OrderStatus;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ public class OrderDTO {
 
     private ClientDTO client;
     private PaymentDTO payment;
+
+    @NotEmpty(message = "Deve ter pelo menos um item")
     private List<OrderItemDTO> items = new ArrayList<>();
 
     public OrderDTO(Long id, Instant moment, OrderStatus status, ClientDTO client, PaymentDTO payment) {
