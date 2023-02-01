@@ -1,11 +1,11 @@
 package com.kortega.dscommerce.services;
 
 import com.kortega.dscommerce.dto.ProductDTO;
+import com.kortega.dscommerce.dto.ProductMinDTO;
 import com.kortega.dscommerce.entities.Product;
 import com.kortega.dscommerce.repositories.ProductRespository;
 import com.kortega.dscommerce.services.exceptions.DataBaseException;
 import com.kortega.dscommerce.services.exceptions.ResourNotFoundException;
-import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -38,9 +37,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findByAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findByAll(String name, Pageable pageable) {
         Page<Product> result = respository.searchByName(name, pageable);
-        return result.map(x -> new ProductDTO(x));
+        return result.map(x -> new ProductMinDTO(x));
     }
 
     @Transactional

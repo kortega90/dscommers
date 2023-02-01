@@ -1,6 +1,7 @@
 package com.kortega.dscommerce.controllers;
 
 import com.kortega.dscommerce.dto.ProductDTO;
+import com.kortega.dscommerce.dto.ProductMinDTO;
 import com.kortega.dscommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(
+    public ResponseEntity<Page<ProductMinDTO>> findAll(
             @RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
         return ResponseEntity.ok(service.findByAll(name, pageable));
     }
