@@ -21,6 +21,6 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDTO>> findAll() {
         return ResponseEntity.ok(service.findByAll());
     }
-    
+
 }
 
